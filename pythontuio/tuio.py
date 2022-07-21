@@ -15,7 +15,7 @@ from typing import  Tuple
 
 
 from pythonosc.udp_client import UDPClient
-from pythonosc.osc_server import BlockingOSCUDPServer
+from pythonosc.osc_server import AsyncIOOSCUDPServer
 
 from pythonosc.osc_message_builder import OscMessageBuilder
 from pythonosc.osc_bundle_builder import OscBundleBuilder
@@ -24,7 +24,7 @@ from pythontuio.dispatcher import TuioDispatcher
 
 
 
-class TuioClient(TuioDispatcher, BlockingOSCUDPServer): # pylint: disable=too-many-ancestors
+class TuioClient(TuioDispatcher, AsyncIOOSCUDPServer): # pylint: disable=too-many-ancestors
     """
     The TuioClient class is the central TUIO protocol decoder component.
     It provides a simple callback infrastructure using the TuioListener interface.
@@ -42,8 +42,8 @@ class TuioClient(TuioDispatcher, BlockingOSCUDPServer): # pylint: disable=too-ma
         start serving for UDP OSC packages
         """
         print(f"starting tuio-client at port {self.server_address[1]}")
-        BlockingOSCUDPServer.__init__(self,self.server_address, self)
-        self.serve_forever()
+        AsyncIOOSCUDPServer.__init__(self,self.server_address, self)
+        self.serve()
 
 class TuioServer(TuioDispatcher, UDPClient):
 
