@@ -6,5 +6,5 @@ from pythontuio.tuio_profiles import Blob
 from pythontuio.tuio_profiles import Object
 
 from pythontuio.tuio import TuioServer
-from pythontuio.tuio import TuioClient
+from pythontuio.tuio import TuioClient,TuioAsyncClient
 from pythontuio.dispatcher import TuioListener
