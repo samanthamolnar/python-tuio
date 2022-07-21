@@ -10,7 +10,7 @@
 
 """
 
-
+import asyncio
 from typing import  Tuple
 
 
@@ -42,7 +42,7 @@ class TuioClient(TuioDispatcher, AsyncIOOSCUDPServer): # pylint: disable=too-man
         start serving for UDP OSC packages
         """
         print(f"starting tuio-client at port {self.server_address[1]}")
-        AsyncIOOSCUDPServer.__init__(self,self.server_address, self)
+        AsyncIOOSCUDPServer.__init__(self,self.server_address, self,asyncio.get_event_loop())
         self.serve()
 
 class TuioServer(TuioDispatcher, UDPClient):
