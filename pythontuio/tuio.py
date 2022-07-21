@@ -42,7 +42,7 @@ class TuioClient(TuioDispatcher, BlockingOSCUDPServer): # pylint: disable=too-ma
         """
         print(f"starting tuio-client at port {self.server_address[1]}")
         BlockingOSCUDPServer.__init__(self,self.server_address, self)
-        self.serve()
+        self.serve_forever()
 
 
 class TuioAsyncClient(TuioDispatcher, AsyncIOOSCUDPServer): # pylint: disable=too-many-ancestors
