@@ -23,8 +23,29 @@ from pythontuio.const import TUIO_BLOB, TUIO_CURSOR, TUIO_OBJECT
 from pythontuio.dispatcher import TuioDispatcher
 
 
+class TuioClient(TuioDispatcher, BlockingOSCUDPServer): # pylint: disable=too-many-ancestors
+    """
+    The TuioClient class is the central TUIO protocol decoder component.
+    It provides a simple callback infrastructure using the TuioListener interface.
+    In order to receive and decode TUIO messages an instance of TuioClient needs to be created.
+    The TuioClient instance then generates TUIO events which are broadcasted to all
+    registered classes that implement the TuioListener interface.
+    """
+    def __init__(self, server_address: Tuple[str, int]): # pylint: disable=W0231
+        TuioDispatcher.__init__(self)
+        self._dispatcher = self
+        self.connected = False
+        self.server_address = server_address
+    def start(self):
+        """
+        start serving for UDP OSC packages
+        """
+        print(f"starting tuio-client at port {self.server_address[1]}")
+        BlockingOSCUDPServer.__init__(self,self.server_address, self)
+        self.serve()
 
-class TuioClient(TuioDispatcher, AsyncIOOSCUDPServer): # pylint: disable=too-many-ancestors
+
+class TuioAsyncClient(TuioDispatcher, AsyncIOOSCUDPServer): # pylint: disable=too-many-ancestors
     """
     The TuioClient class is the central TUIO protocol decoder component.
     It provides a simple callback infrastructure using the TuioListener interface.
