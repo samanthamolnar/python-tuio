@@ -15,7 +15,7 @@ from typing import  Tuple
 
 
 from pythonosc.udp_client import UDPClient
-from pythonosc.osc_server import AsyncIOOSCUDPServer
+from pythonosc.osc_server import AsyncIOOSCUDPServer,BlockingOSCUDPServer
 
 from pythonosc.osc_message_builder import OscMessageBuilder
 from pythonosc.osc_bundle_builder import OscBundleBuilder
