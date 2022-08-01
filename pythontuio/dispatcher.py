@@ -73,7 +73,7 @@ class TuioDispatcher(Dispatcher):
         self._to_add    = []
         self._to_update = []
 
-    async def _cursor_handler(self, address, *args):
+    def _cursor_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Cursor
         """
@@ -106,7 +106,7 @@ class TuioDispatcher(Dispatcher):
             raise Exception("Broken TUIO Package")
 
 
-    async def _object_handler(self, address, *args):
+    def _object_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Object
         """
@@ -140,7 +140,7 @@ class TuioDispatcher(Dispatcher):
         else:
             raise Exception("Broken TUIO Package")
 
-    async def _blob_handler(self, address, *args):
+    def _blob_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Blob
          """
@@ -173,7 +173,7 @@ class TuioDispatcher(Dispatcher):
         else:
             raise Exception("Broken TUIO Package")
 
-    async def _call_listener(self):    # pylint: disable=R0912 
+    def _call_listener(self):    # pylint: disable=R0912 
         for listner in self._listener:
             for profile in self._to_add:
                 if  isinstance(profile, Cursor) :
