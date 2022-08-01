@@ -63,6 +63,7 @@ class Object(Profile):
                 float(self.rotation_acceleration)
         ]:
             builder.add_arg(val)
+        print(builder.build())
         return builder.build()
 
 class Cursor(Profile):
