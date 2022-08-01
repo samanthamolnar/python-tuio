@@ -73,7 +73,7 @@ class TuioDispatcher(Dispatcher):
         self._to_add    = []
         self._to_update = []
 
-    def _cursor_handler(self, address, *args):
+    async def _cursor_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Cursor
         """
@@ -98,7 +98,7 @@ class TuioDispatcher(Dispatcher):
 
 
         elif ttype == TUIO_END:
-            self._call_listener()
+            await self._call_listener()
             #print(f"Bundle recived with {address}:{ttype} {args}")
 
 
