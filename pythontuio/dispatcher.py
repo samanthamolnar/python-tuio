@@ -143,7 +143,7 @@ class TuioDispatcher(Dispatcher):
         """
         callback to convert OSC message into TUIO Blob
          """
-
+        print(args)
         if len(args) == 0 :
             raise Exception("TUIO message is Broken. No TUIO type specified")
         ttype = args[0]
