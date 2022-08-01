@@ -106,7 +106,7 @@ class TuioDispatcher(Dispatcher):
             raise Exception("Broken TUIO Package")
 
 
-    def _object_handler(self, address, *args):
+    async def _object_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Object
         """
@@ -135,12 +135,12 @@ class TuioDispatcher(Dispatcher):
 
 
         elif ttype == TUIO_END:
-            self._call_listener()
+            await self._call_listener()
             #print(f"Bundle recived with {address}:{ttype} {args}")
         else:
             raise Exception("Broken TUIO Package")
 
-    def _blob_handler(self, address, *args):
+    async def _blob_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Blob
          """
@@ -168,7 +168,7 @@ class TuioDispatcher(Dispatcher):
 
 
         elif ttype == TUIO_END:
-            self._call_listener()
+            await self._call_listener()
             #print(f"Bundle recived with {address}:{ttype} {args}")
         else:
             raise Exception("Broken TUIO Package")
