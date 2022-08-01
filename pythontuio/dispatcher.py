@@ -106,6 +106,7 @@ class TuioDispatcher(Dispatcher):
 
 
     def _object_handler(self, address, *args):
+        print(args)
         """
         callback to convert OSC message into TUIO Object
         """
@@ -143,7 +144,6 @@ class TuioDispatcher(Dispatcher):
         """
         callback to convert OSC message into TUIO Blob
          """
-        print(args)
         if len(args) == 0 :
             raise Exception("TUIO message is Broken. No TUIO type specified")
         ttype = args[0]
@@ -164,7 +164,6 @@ class TuioDispatcher(Dispatcher):
                 blob.area                   = args[6]                # f
                 blob.velocity               = (args[7], args[8])     # X,Y
                 blob.velocity_rotation      = args[9]                # A
-                blob.motion_acceleration    = args[10]               # m
                 blob.rotation_acceleration  = args[11]               # r
 
 
