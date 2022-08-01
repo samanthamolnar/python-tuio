@@ -106,7 +106,6 @@ class TuioDispatcher(Dispatcher):
 
 
     def _object_handler(self, address, *args):
-        print(args)
         """
         callback to convert OSC message into TUIO Object
         """
