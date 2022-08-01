@@ -58,22 +58,22 @@ class TuioDispatcher(Dispatcher):
     """
     class to hold Eventlistener and the TuioCursors, TuioBlobs, and TuioObjects
     """
-    async def __init__(self):
+    def __init__(self):
         super().__init__()
         self.cursors : List(Cursor) = []
         self.objects : List(Object) = []
         self.blobs   : List(Blob) = []
         self._listener : list = []
-        self.map(f"{TUIO_CURSOR}*", await self._cursor_handler)
-        self.map(f"{TUIO_OBJECT}*", await self._object_handler)
-        self.map(f"{TUIO_BLOB}*", await self._blob_handler)
+        self.map(f"{TUIO_CURSOR}*", self._cursor_handler)
+        self.map(f"{TUIO_OBJECT}*", self._object_handler)
+        self.map(f"{TUIO_BLOB}*", self._blob_handler)
         self.set_default_handler(self._default_handler)
 
         self._to_delete = []
         self._to_add    = []
         self._to_update = []
 
-    async def _cursor_handler(self, address, *args):
+    def _cursor_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Cursor
         """
@@ -98,15 +98,14 @@ class TuioDispatcher(Dispatcher):
 
 
         elif ttype == TUIO_END:
-            await self._call_listener()
+            self._call_listener()
             #print(f"Bundle recived with {address}:{ttype} {args}")
 
 
         else:
             raise Exception("Broken TUIO Package")
 
-
-    async def _object_handler(self, address, *args):
+    def _object_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Object
         """
@@ -135,12 +134,12 @@ class TuioDispatcher(Dispatcher):
 
 
         elif ttype == TUIO_END:
-            await self._call_listener()
+            self._call_listener()
             #print(f"Bundle recived with {address}:{ttype} {args}")
         else:
             raise Exception("Broken TUIO Package")
 
-    async def _blob_handler(self, address, *args):
+    def _blob_handler(self, address, *args):
         """
         callback to convert OSC message into TUIO Blob
          """
@@ -168,37 +167,37 @@ class TuioDispatcher(Dispatcher):
 
 
         elif ttype == TUIO_END:
-            await self._call_listener()
+            self._call_listener()
             #print(f"Bundle recived with {address}:{ttype} {args}")
         else:
             raise Exception("Broken TUIO Package")
 
-    async def _call_listener(self):    # pylint: disable=R0912 
+    def _call_listener(self):    # pylint: disable=R0912 
         for listner in self._listener:
             for profile in self._to_add:
                 if  isinstance(profile, Cursor) :
-                    await listner.add_tuio_cursor(profile)
+                    listner.add_tuio_cursor(profile)
                 elif isinstance(profile, Object) :
-                    await listner.add_tuio_object(profile)
+                    listner.add_tuio_object(profile)
                 elif isinstance(profile, Blob) :
-                    await listner.add_tuio_blob(profile)
+                    listner.add_tuio_blob(profile)
 
             for profile in self._to_update:
                 if  isinstance(profile, Cursor) :
-                    await listner.update_tuio_cursor(profile)
+                    listner.update_tuio_cursor(profile)
                 elif isinstance(profile, Object) :
-                    await listner.update_tuio_object(profile)
+                    listner.update_tuio_object(profile)
                 elif isinstance(profile, Blob) :
-                    await listner.update_tuio_blob(profile)
+                    listner.update_tuio_blob(profile)
 
 
             for profile in self._to_delete:
                 if  isinstance(profile, Cursor) :
-                    await listner.remove_tuio_cursor(profile)
+                    listner.remove_tuio_cursor(profile)
                 elif isinstance(profile, Object) :
-                    await listner.remove_tuio_object(profile)
+                    listner.remove_tuio_object(profile)
                 elif isinstance(profile, Blob) :
-                    await listner.remove_tuio_blob(profile)
+                    listner.remove_tuio_blob(profile)
 
             listner.refresh(0) # TODO implement time conzept pylint
             self._to_add    = []
