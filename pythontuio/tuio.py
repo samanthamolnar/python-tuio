@@ -32,7 +32,7 @@ class TuioClient(TuioDispatcher, BlockingOSCUDPServer): # pylint: disable=too-ma
     registered classes that implement the TuioListener interface.
     """
     async def __init__(self, server_address: Tuple[str, int]): # pylint: disable=W0231
-        await TuioDispatcher.__init__(self)
+        TuioDispatcher.__init__(self)
         self._dispatcher = self
         self.connected = False
         self.server_address = server_address
