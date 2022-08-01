@@ -120,6 +120,7 @@ class Blob(Profile):
         X, Y = self.velocity
         w, h = self.dimension
         builder = OscMessageBuilder(address=TUIO_BLOB)
+        print(builder)
         for val in [
                 "set",
                 self.session_id,
