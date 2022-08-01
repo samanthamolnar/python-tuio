@@ -4,6 +4,7 @@ classes to handle incoming osc messages
 from abc import ABC # abstract base class of python
 from typing import List
 from pythonosc.dispatcher import Dispatcher
+import asyncio
 
 from pythontuio.tuio_profiles import Cursor, Blob, Object
 from pythontuio.tuio_profiles import TUIO_BLOB, TUIO_CURSOR, TUIO_OBJECT
@@ -172,32 +173,32 @@ class TuioDispatcher(Dispatcher):
         else:
             raise Exception("Broken TUIO Package")
 
-    def _call_listener(self):    # pylint: disable=R0912 
+    async def _call_listener(self):    # pylint: disable=R0912 
         for listner in self._listener:
             for profile in self._to_add:
                 if  isinstance(profile, Cursor) :
-                    listner.add_tuio_cursor(profile)
+                    await listner.add_tuio_cursor(profile)
                 elif isinstance(profile, Object) :
-                    listner.add_tuio_object(profile)
+                    await listner.add_tuio_object(profile)
                 elif isinstance(profile, Blob) :
-                    listner.add_tuio_blob(profile)
+                    await listner.add_tuio_blob(profile)
 
             for profile in self._to_update:
                 if  isinstance(profile, Cursor) :
-                    listner.update_tuio_cursor(profile)
+                    await listner.update_tuio_cursor(profile)
                 elif isinstance(profile, Object) :
-                    listner.update_tuio_object(profile)
+                    await listner.update_tuio_object(profile)
                 elif isinstance(profile, Blob) :
-                    listner.update_tuio_blob(profile)
+                    await listner.update_tuio_blob(profile)
 
 
             for profile in self._to_delete:
                 if  isinstance(profile, Cursor) :
-                    listner.remove_tuio_cursor(profile)
+                    await listner.remove_tuio_cursor(profile)
                 elif isinstance(profile, Object) :
-                    listner.remove_tuio_object(profile)
+                    await listner.remove_tuio_object(profile)
                 elif isinstance(profile, Blob) :
-                    listner.remove_tuio_blob(profile)
+                    await listner.remove_tuio_blob(profile)
 
             listner.refresh(0) # TODO implement time conzept pylint
             self._to_add    = []
